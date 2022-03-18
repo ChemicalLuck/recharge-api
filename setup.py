@@ -1,18 +1,16 @@
-
-import codecs
 import os
-import re
 from setuptools import setup
 
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-with open("README.rst", "r", encoding="utf-8") as fh:
+with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
     name='recharge-api',
-    version='1.4.1',
+    version='1.0.0'
+            '',
     author='ChemicalLuck',
     author_email='chemicalluck@outlook.com',
     packages=['recharge'],
