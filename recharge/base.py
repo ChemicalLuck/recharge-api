@@ -7,7 +7,7 @@ import requests
 log = logging.getLogger(__name__)
 
 
-class BaseResource(object):
+class RechargeResource(object):
     base_url = BASE_URL
     object_key = None
 
@@ -29,27 +29,34 @@ class BaseResource(object):
     def url(self):
         return f'{self.base_url}/{self.object_key}'
 
-    @property
-    def scopes(self):
-        return self.scopes
-
-    @staticmethod
-    def response_handler(self, url, response):
+    def _base_request(self, method, url, data=None):
+        method_to_call = getattr(requests, method)
+        response = method_to_call(url, json=data, headers=self.headers)
+        self.log(url, response)
         if response.status_code == 429:
-            return self.base_delete(url)
-        response.raise_for_status()
+            return self._base_request(method, url, data)
         return response.json()
 
     def base_delete(self, url):
-        response = requests.delete(url, headers=self.headers)
-        self.log(url, response)
-        if response.status_code == 429:
-            return self.base_delete(url)
-        response.raise_for_status()
-        return response.json()
+        return self._base_request('delete', url)
 
-    def base_get(self, url):
-        response = requests.get(url, headers=self.headers)
-        self.log(url, response)
+    def base_get(self, url, data):
+        return self._base_request('get', url, data)
 
+    def base_put(self, url, data):
+        return self._base_request('put', url, data)
 
+    def base_post(self, url, data):
+        return self._base_request('post', url, data)
+
+    def create(self, data):
+        return self.base_post(self.url, data)
+
+    def update(self, resource_id, data):
+        return self.base_put(f'{self.url}/{resource_id}', data)
+
+    def retrieve(self, resource_id):
+        return self.base_get(f'{self.url}/{resource_id}')
+
+    def list(self, data):
+        return self.base_get(self.url, data)
