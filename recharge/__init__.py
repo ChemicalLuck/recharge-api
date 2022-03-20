@@ -18,8 +18,9 @@ from recharge.resources.shops import RechargeShop
 
 class Recharge(object):
 
-    def __init__(self, api_key=None, debug=False):
+    def __init__(self, api_key=None, version='2021-01', debug=False):
         self.api_key = api_key
+        self.version = version
         self.debug = debug
 
         info = self._token_info(self.api_key)
@@ -27,6 +28,7 @@ class Recharge(object):
 
         kwargs = {
             'api_key': api_key,
+            'version': version,
             'debug': debug,
             'scopes': scopes,
         }

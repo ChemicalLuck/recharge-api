@@ -11,13 +11,15 @@ class RechargeResource(object):
     base_url = BASE_URL
     object_key = None
 
-    def __init__(self, api_key=None, debug=False, scopes=None):
+    def __init__(self, api_key=None, version='2021-01', debug=False, scopes=None):
+        self.version = version
         self.debug = debug
         self.scopes = scopes
         self.headers = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'X-Recharge-Access-Token': api_key
+            'X-Recharge-Access-Token': api_key,
+            'X-Recharge-Version': version
         }
 
     def log(self, url, response):
