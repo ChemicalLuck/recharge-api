@@ -8,12 +8,15 @@ from recharge.resources.checkouts import RechargeCheckout
 from recharge.resources.customers import RechargeCustomer
 from recharge.resources.discounts import RechargeDiscount
 from recharge.resources.metafields import RechargeMetafield
+from recharge.resources.notifications import RechargeNotification
 from recharge.resources.onetimes import RechargeOnetime
 from recharge.resources.orders import RechargeOrder
+from recharge.resources.paymentmethods import RechargePaymentMethod
+from recharge.resources.plans import RechargePlan
 from recharge.resources.products import RechargeProduct
 from recharge.resources.subscriptions import RechargeSubscription
-from recharge.resources.webhooks import RechargeWebhook
 from recharge.resources.shops import RechargeShop
+from recharge.resources.webhooks import RechargeWebhook
 
 
 class Recharge(object):
@@ -37,14 +40,17 @@ class Recharge(object):
         self.Charge = RechargeCharge(**kwargs)
         self.Checkout = RechargeCharge(**kwargs)
         self.Customer = RechargeCharge(**kwargs)
-        self.Order = RechargeCharge(**kwargs)
-        self.Subscription = RechargeCharge(**kwargs)
-        self.Onetime = RechargeCharge(**kwargs)
         self.Discount = RechargeCharge(**kwargs)
-        self.Webhook = RechargeWebhook(**kwargs)
         self.Metafield = RechargeCharge(**kwargs)
-        self.Shop = RechargeShop(**kwargs)
+        self.Notification = RechargeNotification(**kwargs)
+        self.Onetime = RechargeCharge(**kwargs)
+        self.Order = RechargeCharge(**kwargs)
+        self.PaymentMethod = RechargePaymentMethod(**kwargs)
+        self.Plan = RechargePlan(**kwargs)
         self.Product = RechargeCharge(**kwargs)
+        self.Shop = RechargeShop(**kwargs)
+        self.Subscription = RechargeCharge(**kwargs)
+        self.Webhook = RechargeWebhook(**kwargs)
 
     @staticmethod
     def _token_info(api_key) -> tuple[str, str, list[str]]:
