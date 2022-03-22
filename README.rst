@@ -42,16 +42,23 @@ Resources Available
 
 ::
 
+    api.Account
     api.Address
+    api.Batch
     api.Charge    
     api.Checkout    
-    api.Customer    
-    api.Order    
-    api.Subscription
-    api.Onetime
+    api.Customer
     api.Discount
-    api.Shop
+    api.Metafield
+    api.Notification
+    api.Onetime
+    api.Order
+    api.PaymentMethod
+    api.Plan
     api.Product
+    api.Shop
+    api.Store
+    api.Subscription
 
 -----------------
 Methods Available

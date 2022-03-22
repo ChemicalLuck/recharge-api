@@ -3,36 +3,52 @@ from recharge.base import RechargeResource
 
 class RechargeCheckout(RechargeResource):
     """
-    https://developer.rechargepayments.com/#checkouts
+    `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/checkouts>`_\n
+    `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/checkouts>`_
     """
     object_key = 'checkouts'
 
     def create(self, data):
-        """Create a checkout
-        https://developer.rechargepayments.com/2021-01/checkouts
+        """Create a checkout.\n
+        Scopes: 'write_checkouts'\n
+        `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/checkouts/checkout_create>`_\n
+        `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/checkouts/checkout_create>`_
         """
+        self.__check_scopes(['write_checkouts'])
         return self.__base_post(self.url, data)
 
     def retrieve(self, checkout_id):
-        """Retrieve a checkout.
-        https://developer.rechargepayments.com/2021-01/checkouts/checkout_retrieve
+        """Retrieve a checkout.\n
+        Scopes: 'read_checkouts'\n
+        `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/checkouts/checkout_retrieve>`_\n
+        `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/checkouts/checkout_retrieve>`_
         """
+        self.__check_scopes(['read_checkouts'])
         return self.__base_get(f'{self.url}/{checkout_id}')
 
     def update(self, checkout_id, data):
-        """Update a checkout.
-        https://developer.rechargepayments.com/2021-01/checkouts/checkout_update
+        """Update a checkout.\n
+        Scopes: 'write_checkouts'\n
+        `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/checkouts/checkout_update>`_\n
+        `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/checkouts/checkout_update>`_
         """
+        self.__check_scopes(['write_checkouts'])
         return self.__base_put(f'{self.url}/{checkout_id}', data)
 
     def get_shipping(self, checkout_id):
-        """Retrieve shipping rates for a checkout
-        https://developer.rechargepayments.com/v1#retrieve-shipping-rates-for-a-checkout
+        """Retrieve shipping rates for a checkout.\n
+        Scopes: 'read_checkouts'\n
+        `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/checkouts/checkout_retrieve_shipping_address>`_\n
+        `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/checkouts/checkout_retrieve_shipping_address>`_
         """
+        self.__check_scopes(['read_checkouts'])
         return self.__base_get(f'{self.url}/{checkout_id}/shipping_rates')
 
     def charge(self, checkout_id, data):
-        """Process (charge) a checkout.
-        https://developer.rechargepayments.com/#process-checkout-beta
+        """Process (charge) a checkout.\n
+        Scopes: 'write_checkouts'\n
+        `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/checkouts/checkout_process>`_\n
+        `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-01/checkouts/checkout_process>`_
         """
+        self.__check_scopes(['write_checkouts'])
         return self.__base_post(f'{self.url}/{checkout_id}/charge', data)

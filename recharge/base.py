@@ -4,6 +4,8 @@ from recharge.constants import BASE_URL
 
 import requests
 
+from recharge.exceptions import InvalidScopeError
+
 log = logging.getLogger(__name__)
 
 
@@ -11,9 +13,10 @@ class RechargeResource(object):
     base_url = BASE_URL
     object_key = None
 
-    def __init__(self, api_key=None, version='2021-01', debug=False, scopes=None):
+    def __init__(self, api_key=None, version='2021-01', validate_scopes=False, debug=False, scopes=None):
         self.version = version
         self.debug = debug
+        self.validate_scopes = validate_scopes
         self.scopes = scopes
         self.headers = {
             'Accept': 'application/json',
@@ -50,3 +53,8 @@ class RechargeResource(object):
 
     def __base_post(self, url, data):
         return self.__base_request('post', url, data)
+
+    def __check_scopes(self, required_scopes: list[str]):
+        if self.validate_scopes:
+            if not all(scope in required_scopes for scope in self.scopes):
+                raise InvalidScopeError(f"Method requires all scopes in: {required_scopes}.")
