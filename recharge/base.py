@@ -63,5 +63,7 @@ class RechargeResource(object):
 
     def __check_scopes(self, required_scopes: list[str]):
         if self.validate_scopes:
-            if not all(scope in required_scopes for scope in self.scopes):
-                raise InvalidScopeError(f"Method requires all scopes in: {required_scopes}.")
+            if required_scopes is not None:
+                if not all(scope in required_scopes for scope in self.scopes):
+                    raise InvalidScopeError(
+                        f"Method requires all scopes in: {required_scopes}.")
