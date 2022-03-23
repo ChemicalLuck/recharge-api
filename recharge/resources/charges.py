@@ -15,8 +15,7 @@ class RechargeCharge(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/charges/charge_retrieve>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/charges/charge_retrieve>`_
         """
-        self.__check_scopes(['read_orders'])
-        return self.__base_get(f'{self.url}/{charge_id}')
+        return self.__base_get(f'{self.url}/{charge_id}', ['read_orders'])
 
     def list(self, data=None):
         """List charges.\n
@@ -24,8 +23,7 @@ class RechargeCharge(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/charges/charge_list>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/charges/charge_list>`_
         """
-        self.__check_scopes(['read_orders'])
-        return self.__base_get(self.url, data)
+        return self.__base_get(self.url, ['read_orders'], data)
 
     @recharge_v1
     def count(self, data=None):
@@ -33,8 +31,7 @@ class RechargeCharge(RechargeResource):
         Scopes: 'read_orders'\n
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/charges/charge_count>`_
         """
-        self.__check_scopes(['read_orders'])
-        return self.__base_get(f'{self.url}/count', data)
+        return self.__base_get(f'{self.url}/count', ['read_orders'], data)
 
     @recharge_v1
     def change_next_charge_date(self, charge_id, next_charge_date):
@@ -42,11 +39,9 @@ class RechargeCharge(RechargeResource):
         Scopes: 'write_orders'\n
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/charges/charge_change_next_date>`_
         """
-        self.__check_scopes(['write_orders'])
         return self.__base_post(
                 f'{self.url}/{charge_id}/change_next_charge_date',
-                {'next_charge_date': next_charge_date}
-        )
+                ['write_orders'], {'next_charge_date': next_charge_date})
 
     def skip(self, charge_id, subscription_id):
         """Skip a charge.\n
@@ -54,11 +49,9 @@ class RechargeCharge(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/charges/charge_skip>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/charges/charge_skip>`_
         """
-        self.__check_scopes(['write_orders'])
-        return self.__base_post(
-            f'{self.url}/{charge_id}/skip',
-            {"subscription_id": subscription_id}
-        )
+        return self.__base_post(f'{self.url}/{charge_id}/skip',
+                                ['write_orders'],
+                                {"subscription_id": subscription_id})
 
     def unskip(self, charge_id, subscription_id):
         """Unskip a charge.\n
@@ -66,11 +59,9 @@ class RechargeCharge(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/charges/charge_unskip>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/charges/charge_unskip>`_
         """
-        self.__check_scopes(['write_orders'])
-        return self.__base_post(
-            f'{self.url}/{charge_id}/unskip',
-            {"subscription_id": subscription_id}
-        )
+        return self.__base_post(f'{self.url}/{charge_id}/unskip',
+                                ['write_orders'],
+                                {"subscription_id": subscription_id})
 
     def refund(self, charge_id, amount):
         """Refund a charge.\n
@@ -78,11 +69,9 @@ class RechargeCharge(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/charges/charge_refund>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/charges/charge_refund>`_
         """
-        self.__check_scopes(['write_orders', 'write_payments'])
-        return self.__base_post(
-            f'{self.url}/{charge_id}/refund',
-            {"amount": amount}
-        )
+        return self.__base_post(f'{self.url}/{charge_id}/refund',
+                                ['write_orders', 'write_payments'],
+                                {"amount": amount})
 
     def full_refund(self, charge_id):
         """Full refund a charge.\n
@@ -90,11 +79,9 @@ class RechargeCharge(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/charges/charge_refund>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/charges/charge_refund>`_
         """
-        self.__check_scopes(['write_orders', 'write_payments'])
-        return self.__base_post(
-            f'{self.url}/{charge_id}/refund',
-            {"full_refund": True}
-        )
+        return self.__base_post(f'{self.url}/{charge_id}/refund',
+                                ['write_orders', 'write_payments'],
+                                {"full_refund": True})
 
     def process(self, charge_id):
         """Process a charge.\n
@@ -102,11 +89,8 @@ class RechargeCharge(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/charges/charge_process>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/charges/charge_process>`_
         """
-        self.__check_scopes(['process_charges'])
-        return self.__base_post(
-            f'{self.url}/{charge_id}/process',
-            {}
-        )
+        return self.__base_post(f'{self.url}/{charge_id}/process',
+                                ['process_charges'], {})
 
     @recharge_v2
     def apply_discount(self, charge_id, data):
@@ -114,8 +98,8 @@ class RechargeCharge(RechargeResource):
         Scopes: 'write_orders'\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/charges/apply_discount>`_
         """
-        self.__check_scopes(['write_orders'])
-        return self.__base_post(f'{self.url}/{charge_id}/apply_discount', data)
+        return self.__base_post(f'{self.url}/{charge_id}/apply_discount',
+                                ['write_orders'], data)
 
     @recharge_v2
     def remove_discount(self, charge_id, data):
@@ -123,5 +107,5 @@ class RechargeCharge(RechargeResource):
         Scopes: 'write_orders'\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/charges/remove_discount>`_
         """
-        self.__check_scopes(['write_orders'])
-        return self.__base_post(f'{self.url}/{charge_id}/remove_discount', data)
+        return self.__base_post(f'{self.url}/{charge_id}/remove_discount',
+                                ['write_orders'], data)

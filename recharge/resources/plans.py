@@ -14,8 +14,7 @@ class RechargePlan(RechargeResource):
         Scopes: 'write_products'\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/plans/plans_create>`_
         """
-        self.__check_scopes(['write_products'])
-        return self.__base_post(self.url, data)
+        return self.__base_post(self.url, ['write_products'], data)
 
     @recharge_v2
     def update(self, plan_id, data):
@@ -23,8 +22,8 @@ class RechargePlan(RechargeResource):
         Scopes: 'write_products'\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/plans/plans_update>`_
         """
-        self.__check_scopes(['write_products'])
-        return self.__base_put(f'{self.url}/{plan_id}', data)
+        return self.__base_put(f'{self.url}/{plan_id}', ['write_products'],
+                               data)
 
     @recharge_v2
     def delete(self, plan_id):
@@ -32,8 +31,7 @@ class RechargePlan(RechargeResource):
         Scopes: 'write_products'\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/plans/plans_delete>`_
         """
-        self.__check_scopes(['write_products'])
-        return self.__base_delete(f'{self.url}/{plan_id}')
+        return self.__base_delete(f'{self.url}/{plan_id}', ['write_products'])
 
     @recharge_v2
     def list(self, data):
@@ -41,5 +39,4 @@ class RechargePlan(RechargeResource):
         Scopes: 'read_products'\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/plans/plans_list>`_
         """
-        self.__check_scopes(['read_products'])
-        return self.__base_get(self.url, data)
+        return self.__base_get(self.url, ['read_products'], data)

@@ -15,8 +15,7 @@ class RechargeProduct(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/products/products_create>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/products/products_create>`_
         """
-        self.__check_scopes(['write_products'])
-        return self.__base_post(self.url, data)
+        return self.__base_post(self.url, ['write_products'], data)
 
     def retrieve(self, product_id):
         """Retrieve a product.\n
@@ -24,8 +23,7 @@ class RechargeProduct(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/products/products_retrieve>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/products/products_retrieve>`_
         """
-        self.__check_scopes(['read_products'])
-        return self.__base_get(f'{self.url}/{product_id}')
+        return self.__base_get(f'{self.url}/{product_id}', ['read_products'])
 
     def update(self, product_id, data):
         """Update a product.\n
@@ -33,8 +31,8 @@ class RechargeProduct(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/products/products_update>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/products/products_update>`_
         """
-        self.__check_scopes(['write_products'])
-        return self.__base_put(f'{self.url}/{product_id}', data)
+        return self.__base_put(f'{self.url}/{product_id}', ['write_products'],
+                               data)
 
     def delete(self, product_id):
         """Delete a product.\n
@@ -42,8 +40,8 @@ class RechargeProduct(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/products/products_delete>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/products/products_delete>`_
         """
-        self.__check_scopes(['write_products'])
-        return self.__base_delete(f'{self.url}/{product_id}')
+        return self.__base_delete(f'{self.url}/{product_id}',
+                                  ['write_products'])
 
     def list(self, data):
         """List products.\n
@@ -51,8 +49,7 @@ class RechargeProduct(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/products/products_list>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/products/products_list>`_
         """
-        self.__check_scopes(['read_products'])
-        return self.__base_get(self.url, data)
+        return self.__base_get(self.url, ['read_products'], data)
 
     @recharge_v1
     def count(self, data):
@@ -60,5 +57,4 @@ class RechargeProduct(RechargeResource):
         Scopes: 'write_products'\n
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/products/products_count>`_
         """
-        self.__check_scopes(['read_products'])
-        return self.__base_get(f'{self.url}/count', data)
+        return self.__base_get(f'{self.url}/count', ['read_products'], data)

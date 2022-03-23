@@ -15,8 +15,7 @@ class RechargeOrder(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/orders_retrieve>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/orders_retrieve>`_
         """
-        self.__check_scopes(['read_orders'])
-        return self.__base_get(f'{self.url}/{order_id}')
+        return self.__base_get(f'{self.url}/{order_id}', ['read_orders'])
 
     def update(self, order_id, data):
         """Update an order.\n
@@ -24,8 +23,7 @@ class RechargeOrder(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/orders_update>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/orders_update>`_
         """
-        self.__check_scopes(['write_orders'])
-        return self.__base_put(f'{self.url}/{order_id}', data)
+        return self.__base_put(f'{self.url}/{order_id}', ['write_orders'], data)
 
     def delete(self, order_id):
         """Delete an order.\n
@@ -33,8 +31,7 @@ class RechargeOrder(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/orders_delete>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/orders_delete>`_
         """
-        self.__check_scopes(['write_orders'])
-        return self.__base_delete(f'{self.url}/{order_id}')
+        return self.__base_delete(f'{self.url}/{order_id}', ['write_orders'])
 
     def list(self, data=None):
         """List orders.\n
@@ -42,8 +39,7 @@ class RechargeOrder(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/orders_list>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/orders_list>`_
         """
-        self.__check_scopes(['read_orders'])
-        return self.__base_get(self.url, data)
+        return self.__base_get(self.url, ['read_orders'], data)
 
     def clone(self, order_id, charge_id, data):
         """Clone an order on charge success.\n
@@ -51,11 +47,9 @@ class RechargeOrder(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/orders_clone>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/orders_clone>`_
         """
-        self.__check_scopes(['write_orders'])
         return self.__base_post(
             f'{self.url}/clone_order_on_success_charge/{order_id}/charge/{charge_id}',
-            data
-        )
+            ['write_orders'], data)
 
     @recharge_v1
     def count(self, data=None):
@@ -63,8 +57,7 @@ class RechargeOrder(RechargeResource):
         Scopes: 'read_orders'\n
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/orders/orders_change_date>`_
         """
-        self.__check_scopes(['read_orders'])
-        return self.__base_get(f'{self.url}/count', data)
+        return self.__base_get(f'{self.url}/count', ['read_orders'], data)
 
     @recharge_v1
     def change_order_date(self, order_id, new_date):
@@ -72,11 +65,8 @@ class RechargeOrder(RechargeResource):
         Scopes: 'write_orders'\n
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/orders/orders_change_dates>`_
         """
-        self.__check_scopes(['write_orders'])
-        return self.__base_post(
-            f'{self.url}/{order_id}/change_date',
-                {'scheduled_at': new_date}
-    )
+        return self.__base_post(f'{self.url}/{order_id}/change_date',
+                                ['write_orders'], {'scheduled_at': new_date})
 
     @recharge_v1
     def change_an_order_variant(self, order_id, old_variant_id, new_variant_id):
@@ -84,8 +74,6 @@ class RechargeOrder(RechargeResource):
         Scopes: 'write_orders'\n
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/orders_change_variant>`_
         """
-        self.__check_scopes(['write_orders'])
         return self.__base_put(
             f'{self.url}/{order_id}/update_shopify_variant/{old_variant_id}',
-            {'new_shopify_variant_id': new_variant_id}
-        )
+            ['write_orders'], {'new_shopify_variant_id': new_variant_id})

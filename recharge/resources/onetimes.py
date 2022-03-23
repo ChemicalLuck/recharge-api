@@ -14,8 +14,7 @@ class RechargeOnetime(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/onetimes/onetimes_create>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/onetimes/onetimes_create>`_
         """
-        self.__check_scopes(['write_subscriptions'])
-        return self.__base_post(self.url, data)
+        return self.__base_post(self.url, ['write_subscriptions'], data)
 
     def retrieve(self, onetime_id):
         """Retrieve a onetime.\n
@@ -23,8 +22,8 @@ class RechargeOnetime(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/onetimes/onetimes_retrieve>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/onetimes/onetimes_retrieve>`_
         """
-        self.__check_scopes(['read_subscriptions'])
-        return self.__base_get(f'{self.url}/{onetime_id}')
+        return self.__base_get(f'{self.url}/{onetime_id}',
+                               ['read_subscriptions'])
 
     def update(self, onetime_id, data):
         """Update a onetime.\n
@@ -32,8 +31,8 @@ class RechargeOnetime(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/onetimes/onetimes_update>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/onetimes/onetimes_update>`_
         """
-        self.__check_scopes(['write_subscriptions'])
-        return self.__base_put(f'{self.url}/{onetime_id}', data)
+        return self.__base_put(f'{self.url}/{onetime_id}',
+                               ['write_subscriptions'], data)
 
     def delete(self, onetime_id):
         """Delete a onetime.\n
@@ -41,8 +40,8 @@ class RechargeOnetime(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/onetimes/onetimes_delete>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/onetimes/onetimes_delete>`_
         """
-        self.__check_scopes(['write_subscriptions'])
-        return self.__base_delete(f'{self.url}/{onetime_id}')
+        return self.__base_delete(f'{self.url}/{onetime_id}',
+                                  ['write_subscriptions'])
 
     def list(self, data=None):
         """List onetimes.\n
@@ -50,5 +49,4 @@ class RechargeOnetime(RechargeResource):
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/onetimes/onetimes_list>`_\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/onetimes/onetimes_list>`_
         """
-        self.__check_scopes(['read_subscriptions'])
-        return self.__base_get(self.url, data)
+        return self.__base_get(self.url, ['read_subscriptions'], data)

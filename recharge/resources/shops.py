@@ -14,9 +14,8 @@ class RechargeShop(RechargeResource):
         Scopes: 'read_store', 'read_shop', 'store_info'\n
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/shop/shop_retrieve>`_
         """
-        self.__check_scopes(['read_store', 'read_shop', 'store_info'])
-        object_key = 'shop' if self.version == '2021-01' else 'store'
-        return self.__base_get(f"{self.base_url}/{object_key}", data)
+        return self.__base_get(self.url,
+                               ['read_store', 'read_shop', 'store_info'], data)
 
     @recharge_v1
     def retrieve_shipping_countries(self, data=None):
@@ -24,8 +23,8 @@ class RechargeShop(RechargeResource):
         Scopes: 'read_store', 'read_shop', 'store_info'\n
         `v1/2021-01 Docs <https://developer.rechargepayments.com/2021-01/shop/shop_shipping_countries>`_
         """
-        self.__check_scopes(['read_store', 'read_shop', 'store_info'])
-        return self.__base_get(f'{self.url}/shipping_countries', data)
+        return self.__base_get(f'{self.url}/shipping_countries',
+                               ['read_store', 'read_shop', 'store_info'], data)
 
 
 class RechargeStore(RechargeResource):
@@ -40,5 +39,4 @@ class RechargeStore(RechargeResource):
         Scopes: 'read_store', 'store_info'\n
         `v1/2021-11 Docs <https://developer.rechargepayments.com/2021-11/store/store_retrieve>`_
         """
-        self.__check_scopes(['read_store', 'store_info'])
-        return self.__base_get(self.url, data)
+        return self.__base_get(self.url, ['read_store', 'store_info'], data)

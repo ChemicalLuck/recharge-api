@@ -34,25 +34,32 @@ class RechargeResource(object):
     def url(self):
         return f'{self.base_url}/{self.object_key}'
 
-    def __base_request(self, method, url, data=None):
-        method_to_call = getattr(requests, method)
-        response = method_to_call(url, json=data, headers=self.headers)
-        self.log(url, response)
+    def __base_request(self, method, url, required_scopes, data=None):
+        if data is None:
+            data = {}
+
+        self.__check_scopes(required_scopes)
+
+        request_to_call = getattr(requests, method)
+        response = request_to_call(url, json=data, headers=self.headers)
+
+        self.__log(url, response)
+
         if response.status_code == 429:
             return self.__base_request(method, url, data)
         return response.json()
 
-    def __base_delete(self, url):
-        return self.__base_request('delete', url)
+    def __base_delete(self, url, required_scopes, data=None):
+        return self.__base_request('delete', url, required_scopes, data)
 
-    def __base_get(self, url, data):
-        return self.__base_request('get', url, data)
+    def __base_get(self, url, required_scopes, data=None):
+        return self.__base_request('get', url, required_scopes, data)
 
-    def __base_put(self, url, data):
-        return self.__base_request('put', url, data)
+    def __base_put(self, url, required_scopes, data=None):
+        return self.__base_request('put', url, required_scopes, data)
 
-    def __base_post(self, url, data):
-        return self.__base_request('post', url, data)
+    def __base_post(self, url, required_scopes, data=None):
+        return self.__base_request('post', url, required_scopes, data)
 
     def __check_scopes(self, required_scopes: list[str]):
         if self.validate_scopes:
