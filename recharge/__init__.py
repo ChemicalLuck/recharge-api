@@ -2,6 +2,7 @@ import json
 from requests import get
 
 from recharge.constants import BASE_URL
+from recharge.constants import ALLOWED_VERSIONS, BASE_URL
 from recharge.resources.accounts import RechargeAccount
 from recharge.resources.addresses import RechargeAddress
 from recharge.resources.batches import RechargeBatch
@@ -42,16 +43,16 @@ class Recharge(object):
         :param bool validate_scopes: Check scopes before request. May decrease speed
         :param bool debug: See more info about the request URL and rate limits
         """
-        allowed_versions = ['2021-01', '2021-11']
 
         self.api_key = api_key
         self.debug = debug
         self.validate_scopes = validate_scopes
 
-        if version in allowed_versions:
+        if version in ALLOWED_VERSIONS:
             self.version = version
         else:
-            raise ValueError(f"{version} not in allowed versions: {allowed_versions}")
+            raise ValueError(
+                    f"{version} not in allowed versions: {ALLOWED_VERSIONS}")
 
         info = self.__token_info(self.api_key)
         scopes = info[2]
