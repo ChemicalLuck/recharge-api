@@ -25,14 +25,14 @@ class RechargeResource(object):
             'X-Recharge-Version': version
         }
 
-    def log(self, url, response):
-        if self.debug:
-            log.info(url)
-            log.ingo(response.headers['X-Recharge-Limit'])
-
     @property
     def url(self):
         return f'{self.base_url}/{self.object_key}'
+
+    def __log(self, url, response):
+        if self.debug:
+            log.info(url)
+            log.info(response.headers['X-Recharge-Limit'])
 
     def __base_request(self, method, url, required_scopes, data=None):
         if data is None:
