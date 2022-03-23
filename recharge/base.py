@@ -1,19 +1,20 @@
 import logging
 
-from recharge.constants import BASE_URL
-
 import requests
 
+from recharge.constants import BASE_URL
 from recharge.exceptions import InvalidScopeError
 
 log = logging.getLogger(__name__)
 
 
 class RechargeResource(object):
+
     base_url = BASE_URL
     object_key = None
 
-    def __init__(self, api_key=None, version='2021-01', validate_scopes=False, debug=False, scopes=None):
+    def __init__(self, api_key=None, version='2021-01', validate_scopes=False,
+                 debug=False, scopes=None):
         self.version = version
         self.debug = debug
         self.validate_scopes = validate_scopes
