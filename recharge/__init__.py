@@ -1,8 +1,9 @@
 import json
+
 from requests import get
 
-from recharge.constants import BASE_URL
 from recharge.constants import ALLOWED_VERSIONS, BASE_URL
+from recharge.exceptions import AuthenticationError
 from recharge.resources.accounts import RechargeAccount
 from recharge.resources.addresses import RechargeAddress
 from recharge.resources.batches import RechargeBatch
@@ -17,16 +18,15 @@ from recharge.resources.orders import RechargeOrder
 from recharge.resources.paymentmethods import RechargePaymentMethod
 from recharge.resources.plans import RechargePlan
 from recharge.resources.products import RechargeProduct
-from recharge.resources.subscriptions import RechargeSubscription
 from recharge.resources.shops import RechargeShop, RechargeStore
+from recharge.resources.subscriptions import RechargeSubscription
 from recharge.resources.webhooks import RechargeWebhook
-
-from recharge.exceptions import AuthenticationError
 
 
 class Recharge(object):
 
-    def __init__(self, api_key=None, version='2021-01', validate_scopes=False, debug=False):
+    def __init__(self, api_key=None, version='2021-01', validate_scopes=False,
+                 debug=False):
         """
         A wrapper for the 'requests' library to make interacting with the
         `Recharge API <https://support.rechargepayments.com/hc/en-us/articles/360008829993-Recharge-API->`_,
